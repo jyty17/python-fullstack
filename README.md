@@ -7,4 +7,4 @@
 
 ## Insipiration
 
-[Science Flask](https://github.com/danielhomola/science_flask "Science Flaks Web App Template")
+<!-- [Science Flask](https://github.com/danielhomola/science_flask "Science Flaks Web App Template") -->

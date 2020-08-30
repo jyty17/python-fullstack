@@ -2,5 +2,6 @@ Pipfile
 Pipfile.lock
 Architectural\ Diagram.pptx
 .DS_Store
-frontend/.env
+frontend/frontend/.env
 db.sqlite3
+frontend/celerybeat-schedule

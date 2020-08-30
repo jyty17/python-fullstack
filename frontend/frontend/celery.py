@@ -24,3 +24,24 @@ app.autodiscover_tasks()
 @app.task(bind=True)
 def debug_task(self):
     print('Request: {0!r}'.format(self.request))
+
+
+# from celery import Celery
+from celery.schedules import crontab
+
+#The decorator is used for recognizing a periodic task
+@app.on_after_configure.connect
+def setup_periodic_tasks(sender, **kwargs):
+
+    #Sending the email every 10 Seconds
+    sender.add_periodic_task(10.0, send_feedback_email_task.s('Ankur','ankur@xyz.com','Hello'), name='add every 10')
+  # Executes every Monday morning at 7:30 a.m.
+    sender.add_periodic_task(
+        crontab(hour=7, minute=30, day_of_week=1),
+        send_feedback_email_task.s('Ankur','ankur@xyz.com','Hello'),)
+
+#The task to be processed by the worker
+@app.task
+def send_feedback_email_task(name,email,message):
+    send_feedback_email(name,email,message)
+    logger.info("Sent email")

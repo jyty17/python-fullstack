@@ -15,14 +15,26 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
-from .env import DJANGO_SECRET_KEY
+# from .env import DJANGO_SECRET_KEY
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = DJANGO_SECRET_KEY
+# import environ
+# env = environ.Env()
+# environ.Env.read_env()
 
+# DJANGO_SECRET_KEY = env('DJANGO_SECRET_KEY')
+# SECRET_KEY = DJANGO_SECRET_KEY
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# print(os.environ['DJANGO_SECRET_KEY'])
+DJANGO_SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+SECRET_KEY = DJANGO_SECRET_KEY
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 

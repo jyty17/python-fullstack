@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from . import views
+
+app_name='frontend'
+
 urlpatterns = [
+	path('engine/', include("engine_1.urls")),
     path('admin/', admin.site.urls),
     # path('engine/', include("engine_1.urls"))
 ]

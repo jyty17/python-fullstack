@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>BenAna</title>
-</head>
-<body>
-	<div>
-		<a href="/"><h1>BenAna</h1></a>
-		<a href="about/" title="">About</a>
-		<a href="upload/" title="">Upload</a>
-		<a href="help/" title="">Help</a>
-		<a href="profile/" title="">Profile</a>
-	</div>
+{% extends 'engine_1/base.html' %}
+{% load crispy_forms_tags %}
 
+{% block content %}
 	<div>
 		<h1>Sign In</h1>
-		<form action="login_submit" method="get" accept-charset="utf-8">
-			<div>
-				<p>Username</p>
-				<input type="text" name="username">
-			</div>
-			<div>
-				<p>Password</p>
-				<input type="password" name="password">	
-			</div>
-			<input type="submit" value="Login">
+
+		<form id="login_form" method="post" accept-charset="utf-8" class="form-group">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<input type="submit" value="Login" class="btn btn-success">
+			{% if form.errors %}
+				<p>Incorrect username or password</p>
+			{% endif %}
 		</form>
-		<input type="button" onclick="" value="Sign Up">
-		<input type="button" onclick="" value="Forgot Password">
+		<div class="row justify-content-between">
+			<div>
+				<p>Don't have an account?</p>
+				<input type="button" onclick="window.location.href='../signup'" value="Sign Up!" class="btn btn-primary">
+			</div>
+			<input type="button" onclick="" value="Forgot Password" class="btn btn-secondary">
+		</div>
 	</div>
-</body>
-</html>
+{% endblock %}

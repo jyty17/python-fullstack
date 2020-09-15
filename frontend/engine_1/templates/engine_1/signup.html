@@ -1,0 +1,23 @@
+{% extends 'engine_1/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+	<div>
+		<h1>Sign Up</h1>
+		<form method="POST" accept-charset="utf-8" class="form-group">
+			{% csrf_token %}
+			{{ form|crispy }}
+			
+			<div class="row justify-content-between">
+				<input type="submit" value="Create Account" class="btn btn-success">
+				<div class="">
+					<p>Already have an account?</p>
+					<input type="button" onclick="window.location.href='/engine/login'" value="Sign In">	
+				</div>
+			</div>
+		</form>
+		<!-- <p>Already have an account?</p>
+		<input type="button" onclick="window.location.href='../login'" value="Sign In"> -->
+	</div>
+
+{% endblock %}

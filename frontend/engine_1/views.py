@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, Http404, HttpResponseRedirect, JsonResponse
 from django.template import loader
 
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from django.contrib import messages
@@ -35,16 +35,21 @@ def viz(request):
 #  ----------------------------------------------------------------------------------------
 
 def home(request):
-
+    user = request.user
+    print(user, request.user.is_authenticated)
     if request.user.is_authenticated:
         username = request.user.username
         content=f"Welcome {username}!"
+        context = {'user': user, 'heading': content}
     else:
         content="Welcome to BenAna, a service used to analyze your script"
+        context={'user': None, 'heading': content}
     # return HttpResponse("This is home!")
-    return render(request, 'engine_1/home.html', context={'heading': content})
+    return render(request, 'engine_1/home.html', context=context)
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect("/engine")
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
@@ -60,12 +65,13 @@ def user_login(request):
         else:
             messages.error(request, "Invalid username or password")
     form = AuthenticationForm()
-    return render(request=request, template_name="engine_1/login.html", context={'form': form})
+    context = {'user': None, 'form': form}
+    return render(request=request, template_name="engine_1/login.html", context=context)
     # return HttpResponse("This is the login page")
 
-def about(request):
-    return HttpResponse("About This App!")
-
+def user_logout(request):
+    logout(request)
+    return redirect('/')
 
 def signup(request):
     if request.method == 'POST':
@@ -81,3 +87,39 @@ def signup(request):
     else:
         form = CreateUserForm()
     return render(request, 'engine_1/signup.html', {'form': form})
+
+def about(request):
+    return HttpResponse("About This App!")
+
+def user_profile(request, id):
+    return HttpResponse(f"User {id}'s profile")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

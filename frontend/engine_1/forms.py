@@ -23,3 +23,8 @@ class CreateUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+class UploaderForm(forms.Form):
+	name = forms.CharField(label='Name')
+	description = forms.CharField(label="Description")
+	file = forms.FileField()

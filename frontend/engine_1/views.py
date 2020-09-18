@@ -7,8 +7,9 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 from django.contrib import messages
 
-from .forms import FeedbackForm, CreateUserForm
+from .forms import FeedbackForm, CreateUserForm, UploaderForm
 
+from .models import Uploads
 
 #  ----------------------------------------------------------------------------------------
 #  Initial placeholder pages
@@ -39,8 +40,9 @@ def home(request):
     print(user, request.user.is_authenticated)
     if request.user.is_authenticated:
         username = request.user.username
-        content=f"Welcome {username}!"
-        context = {'user': user, 'heading': content}
+        # uploads = Uploads.object.filter(user_id=user.id)
+        # uploads = Uploads.objects.select_related('user_id').get(id=user.id)
+        context = {'user': user, 'heading': f"Welcome {username}!"}
     else:
         content="Welcome to BenAna, a service used to analyze your script"
         context={'user': None, 'heading': content}
@@ -93,6 +95,18 @@ def about(request):
 
 def user_profile(request, id):
     return HttpResponse(f"User {id}'s profile")
+
+def user_upload(request, id):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('/')
+    if request.method == 'POST':
+        form = UploaderForm(request.POST)
+        return redirect('/')
+    else:
+        form = UploaderForm()
+    return render(request, 'engine_1/upload.html', {'user': user, 'form': form})
+
 
 
 

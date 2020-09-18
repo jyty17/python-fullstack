@@ -27,4 +27,4 @@ class CreateUserForm(UserCreationForm):
 class UploaderForm(forms.Form):
 	name = forms.CharField(label='Name')
 	description = forms.CharField(label="Description")
-	file = forms.FileField()
+	# file = forms.FileField()

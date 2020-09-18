@@ -10,9 +10,9 @@
 	<div class="page-header">
 		<a href="/engine"><h1>BenAna</h1></a>
 		<a href="/engine/about" title="">About</a>
-		<a href="/engine/upload" title="">Upload</a>
 		<a href="/engine/help" title="">Help</a>
 		{% if user %}
+			<a href="{% url 'engine_1:user_upload' user.id %}" title="">Upload</a>
 			<a href="{% url 'engine_1:user_profile' user.id %}" title="">Profile</a>
 		{% endif %}
 		{% if not user %}

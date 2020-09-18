@@ -3,6 +3,13 @@
 {% block content %}
 <div>
 	<h1>Engines</h1>
+
 	<p>{{ heading }}</p>
+
+	{% for instance in uploads %}
+		<div>
+			<a>{{ instance.name }}</a>
+		</div>
+	{% endfor %}
 </div>
 {% endblock %}

@@ -6,20 +6,23 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
-<body>
-	<div class="page-header">
-		<a href="/engine"><h1>BenAna</h1></a>
-		<a href="/engine/about" title="">About</a>
-		<a href="/engine/help" title="">Help</a>
-		{% if user %}
-			<a href="{% url 'engine_1:user_upload' user.id %}" title="">Upload</a>
-			<a href="{% url 'engine_1:user_profile' user.id %}" title="">Profile</a>
-		{% endif %}
-		{% if not user %}
-			<a href="/engine/login" title="">Login</a>
-		{% endif %}
+<body class="container">
+	<div class="page-header row justify-content-between navbar navbar-toggler navbar-expand-lg mt-4 mb-4">
+		<a href="{% url 'engine_1:home' %}" class=""><h1 class="display-3 text-monospace">BenAna</h1></a>
+		<ul class="nav">
+			<a href="{% url 'engine_1:home' %}" title="home" class="nav-link">Home</a>
+			<a href="{% url 'engine_1:about' %}" title="about" class="nav-link">About</a>
+			<!-- <a href="/engine/help" title="" class="nav-link">Help</a> -->
+			{% if user %}
+				<a href="{% url 'engine_1:user_upload' user.id %}" title="" class="nav-link">Upload</a>
+				<a href="{% url 'engine_1:user_profile' user.id %}" title="" class="nav-link">Profile</a>
+			{% endif %}
+			{% if not user %}
+				<a href="{% url 'engine_1:login' %}" title="" class="nav-link">Login</a>
+			{% endif %}
+		</ul>
 	</div>
-	<div class="container">
+	<div class="">
 		{% block content %}
 		{% endblock %}
 	</div>

@@ -1,6 +1,6 @@
 from django import forms
 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
 
 class FeedbackForm(forms.Form):
@@ -15,7 +15,14 @@ class CreateUserForm(UserCreationForm):
 
 	class Meta:
 		model = User
-		fields = ["username", "email", "password1", "password2"]
+		fields = [
+			"first_name",
+			"last_name",
+			"username",
+			"email",
+			"password1",
+			"password2"
+		]
 
 	def save(self, commit=True):
 		user = super(CreateUserForm, self).save(commit=False)
@@ -23,6 +30,13 @@ class CreateUserForm(UserCreationForm):
 		if commit:
 			user.save()
 		return user
+
+class EditUserForm(UserChangeForm):
+	class Meta:
+		model = User
+		fields = ["first_name", "last_name", "username", "email"]
+		# exclude = ["password",]
+
 
 class UploaderForm(forms.Form):
 	name = forms.CharField(label='Name')

@@ -4,10 +4,14 @@ from django.template import loader
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.models import User
 
 from django.contrib import messages
 
-from .forms import FeedbackForm, CreateUserForm, UploaderForm
+from .forms import FeedbackForm
+from .forms import CreateUserForm
+from .forms import UploaderForm
+from .forms import EditUserForm
 
 from .models import Uploads
 
@@ -37,7 +41,7 @@ def viz(request):
 
 def home(request):
     user = request.user
-    print(user, request.user.is_authenticated)
+    # print(user, request.user.is_authenticated)
     if request.user.is_authenticated:
         username = request.user.username
         # uploads = Uploads.object.filter(user_id=user.id)
@@ -91,9 +95,33 @@ def signup(request):
     return render(request, 'engine_1/signup.html', {'form': form})
 
 def about(request):
-    return HttpResponse("About This App!")
+    user = request.user if request.user.is_authenticated else None
+    context = {
+        'user': user,
+    }
+    return render(request, 'engine_1/about.html', context=context)
+    # return HttpResponse("About This App!")
 
 def user_profile(request, id):
+    user = request.user if request.user.is_authenticated else None
+    if user:
+        profile = User.objects.get(pk=user.id)
+        if request.method == 'POST':
+            form = EditUserForm(request.POST, instance=user)
+            # .exclude(field_value="password")
+            if form.is_valid():
+                form.save()
+                return redirect(f'/engine/{user.id}/profile')
+        else:
+            form = EditUserForm(instance=user)
+            context = {
+                'form': form
+            }
+            return render(request, 'engine_1/profile.html', context=context)
+    else:
+        return redirect('/engine/login')
+
+
     return HttpResponse(f"User {id}'s profile")
 
 def user_upload(request, id):

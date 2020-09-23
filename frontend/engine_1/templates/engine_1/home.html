@@ -2,14 +2,23 @@
 
 {% block content %}
 <div>
-	<h1>Engines</h1>
+	{% if user %}
+		<h1>Engines</h1>
 
-	<p>{{ heading }}</p>
+		<p>{{ heading }}</p>
 
-	{% for instance in uploads %}
-		<div>
-			<a>{{ instance.name }}</a>
-		</div>
-	{% endfor %}
+		{% for records in uploads %}
+			<div>
+				<a>{{ records.name }}</a>
+			</div>
+		{% endfor %}
+	{% endif %}
+	{% if not user %}
+	<div class="mt-5 d-flex justify-content-center flex-column align-content-center">
+		<h1 class="display-2">Welcome To BenAna!</h1>
+		<p class="display-4">A tool used to analyze your python code!</p>
+		<p class="display-4"><a href="{% url 'engine_1:login' %}" title="" class="">Get Started</a></p>
+	</div>
+	{% endif %}
 </div>
 {% endblock %}

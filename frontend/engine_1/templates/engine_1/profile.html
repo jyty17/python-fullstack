@@ -8,7 +8,8 @@
 		{{ form|crispy }}
 		<input type="submit" name="save" value="Save" class="btn btn-success">
 	</form>
-	<input type="submit" name="logout" value="Logout" class="btn btn-danger">
+	<!-- <a type="submit" name="logout" value="Logout" class="btn btn-danger"> -->
+	<a href="{% url 'engine_1:logout' %}" title="logout" class="btn btn-danger">Log Out</a>
 	
 </div>
 {% endblock %}

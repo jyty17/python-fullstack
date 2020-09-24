@@ -1,4 +1,7 @@
 {% extends 'engine_1/base.html' %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'engine/home.css' %}">
 
 {% block content %}
 <div>
@@ -12,12 +15,11 @@
 				<a>{{ records.name }}</a>
 			</div>
 		{% endfor %}
-	{% endif %}
-	{% if not user %}
-	<div class="mt-5 d-flex justify-content-center flex-column align-content-center">
-		<h1 class="display-2">Welcome To BenAna!</h1>
+	{% else %}
+	<div class="mt-5 d-flex justify-content-center flex-column align-items-center">
+		<h1 class="display-3">Welcome To BenAna!</h1>
 		<p class="display-4">A tool used to analyze your python code!</p>
-		<p class="display-4"><a href="{% url 'engine_1:login' %}" title="" class="">Get Started</a></p>
+		<p class="display-4"><a href="{% url 'engine_1:login' %}" title="" class="border border-info p-2 px-5 mt-5 get-started">Get Started!</a></p>
 	</div>
 	{% endif %}
 </div>

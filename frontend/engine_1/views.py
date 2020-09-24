@@ -54,7 +54,7 @@ def home(request):
     return render(request, 'engine_1/home.html', context=context)
 
 def user_login(request):
-    if request.user.is_authenticated:
+    if request.user and request.user.is_authenticated:
         return redirect("/engine")
     if request.method == 'POST':
         form = AuthenticationForm(request=request, data=request.POST)
@@ -76,8 +76,15 @@ def user_login(request):
     # return HttpResponse("This is the login page")
 
 def user_logout(request):
-    logout(request)
-    return redirect('/')
+    user = request.user
+    if user and user.is_authenticated:
+        logout(request)
+        context = {
+            'user': user
+        }
+    else:
+        return redirect('/engine')
+    return render(request, 'engine_1/logout.html', context=context)
 
 def signup(request):
     if request.method == 'POST':
@@ -92,7 +99,7 @@ def signup(request):
             return redirect('/')
     else:
         form = CreateUserForm()
-    return render(request, 'engine_1/signup.html', {'form': form})
+    return render(request, 'engine_1/signup.html', {'form': form, 'user': None})
 
 def about(request):
     user = request.user if request.user.is_authenticated else None

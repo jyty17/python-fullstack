@@ -6,14 +6,20 @@ import datetime
 from django.contrib.auth.models import User
 
 class Uploads(models.Model):
-	user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-	filename = models.CharField(max_length=200)
-	
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	filename = models.CharField(max_length=150)
+	description = models.CharField(max_length=300, default=filename)
 	date_uploaded = models.DateTimeField('date_published')
+	last_opened = models.DateTimeField('last_opened')
 	# last_used = 
 
 	def __str__(self):
-		return f'{filename}'
+		return f'user: {self.user}, \n \
+				filename: {self.filename}, \n \
+				description: {self.description} \n \
+				date_uploaded: {self.date_uploaded} \n \
+				last_opened: {self.last_opened} \n \
+				'
 
 
 class UserProfile(models.Model):

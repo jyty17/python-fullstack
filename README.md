@@ -1,4 +1,4 @@
-# Python Full Stack
+# Python Full Stack BenAna
 
 ## Objective
 - Create task queuing service for custom engine
@@ -19,6 +19,9 @@ Then start celery scheduler
 Then start celery worker to get tasks
 ```celery -A frontend worker -l info```
 
-## Insipiration
+<!-- ## Insipiration -->
 
 <!-- [Science Flask](https://github.com/danielhomola/science_flask "Science Flaks Web App Template") -->
+
+## Styling
+Designed using Boostrap4 CSS

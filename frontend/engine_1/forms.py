@@ -1,7 +1,10 @@
 from django import forms
 
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.forms import ModelForm
 from django.contrib.auth.models import User
+
+from .models import Uploads
 
 class FeedbackForm(forms.Form):
     name = forms.CharField(label='Name')
@@ -35,10 +38,24 @@ class EditUserForm(UserChangeForm):
 	class Meta:
 		model = User
 		fields = ["first_name", "last_name", "username", "email"]
-		# exclude = ["password",]
+		exclude = ["password",]
 
 
-class UploaderForm(forms.Form):
-	name = forms.CharField(label='Name')
-	description = forms.CharField(label="Description")
-	# file = forms.FileField()
+class UploaderForm(ModelForm):
+	class Meta:
+		model = Uploads
+		user = User
+		fields = ["filename", "description"]
+
+
+	def save(self, commit=True):
+		upload = super(UploaderForm, self).save(commit=False)
+		print(upload)
+		if commit:
+			upload.save()
+		return upload
+		# data = {
+		# 	'user_id': '',
+		# 	'filename': '',
+		# 	'description': '',
+		# }

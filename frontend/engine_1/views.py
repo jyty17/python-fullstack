@@ -133,14 +133,18 @@ def user_profile(request, id):
 
 def user_upload(request, id):
     user = request.user
+    error = None
     if not user.is_authenticated:
         return redirect('/')
     if request.method == 'POST':
         form = UploaderForm(request.POST)
-        return redirect('/')
+        if form.is_valid():
+            form.save()
+            return redirect('/engine/home')
+        error = "Something went wrong :("
     else:
         form = UploaderForm()
-    return render(request, 'engine_1/upload.html', {'user': user, 'form': form})
+    return render(request, 'engine_1/upload.html', {'user': user, 'form': form, 'error': error})
 
 
 

@@ -5,3 +5,4 @@ Architectural\ Diagram.pptx
 frontend/frontend/.env
 db.sqlite3
 frontend/celerybeat-schedule
+frontend/engine_1/migrations

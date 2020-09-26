@@ -8,6 +8,9 @@
 		<form action="" method="POST" accept-charset="utf-8">
 			{% csrf_token %}
 			{{ form|crispy }}
+			{% if error %}
+				<p>{{ error }}</p>
+			{% endif %}
 			<input type="submit" value="Upload" class="btn btn-success">
 		</form>
 		<a href="{% url 'engine_1:home' %}" title="" class="btn btn-secondary">Back</a>

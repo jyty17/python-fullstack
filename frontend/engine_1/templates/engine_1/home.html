@@ -9,12 +9,14 @@
 		<h1>Engines</h1>
 
 		<p>{{ heading }}</p>
-
-		{% for records in uploads %}
-			<div>
-				<a>{{ records.name }}</a>
-			</div>
-		{% endfor %}
+		<div class="card-group">
+			{% for records in uploads %}
+				<div class="card card-body">
+					<h3 class="card-title">{{ records.filename }}</h3>
+					<p class="card-text">{{ records.description }}</p>
+				</div>
+			{% endfor %}
+		</div>
 	{% else %}
 	<div class="mt-5 d-flex justify-content-center flex-column align-items-center">
 		<h1 class="display-3">Welcome To BenAna!</h1>

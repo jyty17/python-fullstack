@@ -9,11 +9,14 @@
 			{% csrf_token %}
 			{{ form|crispy }}
 			{% if error %}
-				<p>{{ error }}</p>
+				<p class="text-danger">{{ error }}</p>
 			{% endif %}
-			<input type="submit" value="Upload" class="btn btn-success">
+			<div class="d-flex justify-content-between">
+				<a href="{% url 'engine_1:home' %}" title="" class="btn btn-secondary">Back</a>
+				<input type="submit" value="Upload" class="btn btn-success">
+			</div>
 		</form>
-		<a href="{% url 'engine_1:home' %}" title="" class="btn btn-secondary">Back</a>
+		
 	</div>
 </div>
 {% endblock %}

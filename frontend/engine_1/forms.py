@@ -44,14 +44,15 @@ class EditUserForm(UserChangeForm):
 class UploaderForm(ModelForm):
 	class Meta:
 		model = Uploads
-		user = User
 		fields = ["filename", "description"]
 
 
 	def save(self, commit=True):
 		upload = super(UploaderForm, self).save(commit=False)
-		print(upload)
+		# user = User
+		
 		if commit:
+			print(upload)
 			upload.save()
 		return upload
 		# data = {

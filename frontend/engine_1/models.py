@@ -8,9 +8,9 @@ from django.contrib.auth.models import User
 class Uploads(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	filename = models.CharField(max_length=150)
-	description = models.CharField(max_length=300, default=filename)
-	date_uploaded = models.DateTimeField('date_published')
-	last_opened = models.DateTimeField('last_opened')
+	description = models.CharField(max_length=300, default='')
+	date_uploaded = models.DateTimeField('date_published', auto_now_add=True)
+	last_opened = models.DateTimeField('last_opened', auto_now=True)
 	# last_used = 
 
 	def __str__(self):

@@ -5,6 +5,7 @@ from django.template import loader
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 from django.contrib import messages
 
@@ -44,9 +45,10 @@ def home(request):
     # print(user, request.user.is_authenticated)
     if request.user.is_authenticated:
         username = request.user.username
-        # uploads = Uploads.object.filter(user_id=user.id)
+        uploads = Uploads.objects.filter(user=user)
+        # print(uploads)
         # uploads = Uploads.objects.select_related('user_id').get(id=user.id)
-        context = {'user': user, 'heading': f"Welcome {username}!"}
+        context = {'user': user, 'heading': f"Welcome {username}!", 'uploads': uploads}
     else:
         content="Welcome to BenAna, a service used to analyze your script"
         context={'user': None, 'heading': content}
@@ -96,7 +98,7 @@ def signup(request):
             # if form.validate_password
             user = authenticate(username=username, password=raw_password)
             login(user)
-            return redirect('/')
+            return redirect(reverse('engine_1:home'))
     else:
         form = CreateUserForm()
     return render(request, 'engine_1/signup.html', {'form': form, 'user': None})
@@ -126,7 +128,7 @@ def user_profile(request, id):
             }
             return render(request, 'engine_1/profile.html', context=context)
     else:
-        return redirect('/engine/login')
+        return redirect(reverse('engine_1:login'))
 
 
     return HttpResponse(f"User {id}'s profile")
@@ -139,8 +141,10 @@ def user_upload(request, id):
     if request.method == 'POST':
         form = UploaderForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('/engine/home')
+            upload = form.save(commit=False)
+            upload.user = user
+            upload.save()
+            return redirect(reverse('engine_1:home'))
         error = "Something went wrong :("
     else:
         form = UploaderForm()

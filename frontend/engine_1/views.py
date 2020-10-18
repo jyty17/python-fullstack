@@ -157,14 +157,14 @@ def user_upload_index(request, uid, upload_id):
         if request.method == 'POST':
             form = UploaderForm(request.POST, instance=upload)
             if form.is_valid():
-                form.save()
-                return redirect()
+                upload = form.save(commit=False)
+                upload.save()
+                return redirect(reverse('engine_1:home'))
         else:
-            form = UploaderForm(instance=user)
+            form = UploaderForm(instance=upload)
             context = {
                 'user': user,
                 'form': form,
-
             }
             return render(request, 'engine_1/upload_index.html', context=context)
 

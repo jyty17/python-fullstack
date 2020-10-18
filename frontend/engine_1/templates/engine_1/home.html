@@ -10,12 +10,16 @@
 
 		<p>{{ heading }}</p>
 		<div class="card-group">
-			{% for records in uploads %}
-				<div class="card card-body">
-					<h3 class="card-title">{{ records.filename }}</h3>
-					<p class="card-text">{{ records.description }}</p>
-				</div>
-			{% endfor %}
+			{% if uploads %}
+				{% for records in uploads %}
+					<a href="{% url 'engine_1:user_upload_index' uid=user.id upload_id=records.id %}" class="card card-body">
+						<h3 class="card-title">{{ records.filename }}</h3>
+						<p class="card-text">{{ records.description }}</p>
+					</a>
+				{% endfor %}
+			{% else %}
+				<p>Start uploading -></p>
+			{% endif %}
 		</div>
 	{% else %}
 	<div class="mt-5 d-flex justify-content-center flex-column align-items-center">

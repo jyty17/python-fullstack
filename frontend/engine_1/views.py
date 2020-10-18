@@ -131,7 +131,7 @@ def user_profile(request, id):
         return redirect(reverse('engine_1:login'))
 
 
-    return HttpResponse(f"User {id}'s profile")
+    # return HttpResponse(f"User {id}'s profile")
 
 def user_upload(request, id):
     user = request.user
@@ -150,7 +150,29 @@ def user_upload(request, id):
         form = UploaderForm()
     return render(request, 'engine_1/upload.html', {'user': user, 'form': form, 'error': error})
 
+def user_upload_index(request, uid, upload_id):
+    user = request.user if request.user.is_authenticated else None
+    if user and user.id == uid:
+        upload = Uploads.objects.get(pk=upload_id)
+        if request.method == 'POST':
+            form = UploaderForm(request.POST, instance=upload)
+            if form.is_valid():
+                form.save()
+                return redirect()
+        else:
+            form = UploaderForm(instance=user)
+            context = {
+                'user': user,
+                'form': form,
 
+            }
+            return render(request, 'engine_1/upload_index.html', context=context)
+
+    return redirect(reverse('engine_1:home'))
+
+
+def scoreboard(request):
+    return render(request, 'engine_1/scoreboard.html', {})
 
 
 
